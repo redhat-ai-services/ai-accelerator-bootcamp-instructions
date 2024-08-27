@@ -168,5 +168,41 @@ mirror:
   helm: {}
 ----
 
-oc-mirror command takes about 2 hours to complete. 
+oc-mirror command takes about 4 hours to complete. 
+
+.install-config.yaml
+[source, sh]
+----
+apiVersion: v1
+metadata:
+  name: disco
+baseDomain: lab
+compute:
+- architecture: amd64
+  hyperthreading: Enabled
+  name: worker
+  replicas: 3
+controlPlane:
+  architecture: amd64
+  hyperthreading: Enabled
+  name: master
+  replicas: 5
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: 10.0.0.0/16
+  networkType: OVNKubernetes
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  aws:
+    region: us-east-2
+    subnets:
+    - subnet-079ac31e791746995
+publish: Internal
+additionalTrustBundlePolicy: Always
+
+----
 
